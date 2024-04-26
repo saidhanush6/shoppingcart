@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ page import = "java.io.*,java.util.*,practice.*"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Online Store</title>
+<title>Shopping Cart</title>
 <style>
 body {
     font-family: Arial, sans-serif;
@@ -15,19 +16,33 @@ body {
 }
 
 h1 {
-    margin-top: 20px; 
-    background-color: lightblue;
-    display: flex;
+    margin-top: 20px;   
     justify-content: center;
     align-items: center;
 }
 
-#heading-icon {
-    width: 30px;
-    height: 30px;
-    margin-left: 10px; /* Adjusted margin for the icon */
+#hd{
+ background-color: lightyellow;
+ padding:1px 0px 1px 0px;
 }
 
+#h1{
+margin-left:450px; 
+}
+
+#heading-icon {
+    width: 50px;
+    height: 50px; 
+    padding-top:10 px;
+    margin-left: 350px; 
+}
+
+#link {
+    padding: 20px;
+    margin-left: 1060px;
+    margin-top: 100px;
+    font-size: 17px;
+}
 label, select {
     margin: 20px; 
     width: 200px; 
@@ -76,6 +91,7 @@ label, select {
     background-color: #45a049;
 }
 </style>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
@@ -97,16 +113,24 @@ $(document).ready(function() {
     });
 
     // Click event for the cart icon in the header
-    $('h1').click(function() {
+    $('#heading-icon').click(function() {
         // Redirect to cart.jsp to display cart contents
         window.location.href = 'cart.jsp';
     });
 });
 </script>
+
+
 </head>
 <body>
-    <h1>Online Store <img id="heading-icon" src="https://cdn-icons-png.flaticon.com/512/2037/2037516.png" alt="Icon"></h1> 
-    <form action="cart.jsp" method="post">
+<div id="hd">
+    <h1><label id="h1">Online Store <label></label><img id="heading-icon" src="https://cdn-icons-png.flaticon.com/512/2037/2037516.png" alt="Icon">
+    <a id="link" href="login1.html">
+    SignIn/Register
+    </a>    
+    </h1> 
+  </div> 
+    <form>
         <label id="l1">Category:</label>
         <select name="category" id="category">
             <option value="1">Category 1</option>
@@ -121,27 +145,42 @@ $(document).ready(function() {
         </select>
     </form>
 
-    <%
-    String[][] products = {
-        {"Soap with Foam", "https://img.freepik.com/premium-vector/soap-with-foam-vector-flat-illustration_444100-100.jpg", "This refreshing soap illustration features a rich lather of foam that will leave your skin feeling clean and rejuvenated. Perfect for your daily bath routine!"},
-        {"T-Shirt", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPyNfiBKbbmJij3kyfewOK2jD0oIf_mfu8mg_bcMy6WA&s", "Our best-selling T-Shirt is made from premium cotton and designed for comfort and style. Available in various sizes and colors. Get yours today!"},
-        {"Mobile Phone Icon", "https://static.vecteezy.com/system/resources/previews/011/157/544/original/mobile-phone-cartoon-icon-illustration-technology-object-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg", "Discover our premium flat mobile phone icon, perfect for web and app design projects. This sleek design will elevate your digital creations!"}
-    };
-
-    // Display product cards
-    for (int i = 0; i < products.length; i++) {
-    %>
     <div class="product">
-        <img src="<%= products[i][1] %>" alt="<%= products[i][0] %>">
+        <img src="https://img.freepik.com/premium-vector/soap-with-foam-vector-flat-illustration_444100-100.jpg" alt="Product 1">
         <div class="product-description">
-            <h3><%= products[i][0] %></h3>
-            <p><%= products[i][2] %></p>
-            <button class="add-to-cart" value="<%= i %>">Add to Cart</button>
+            <h3>Soap with Foam</h3>
+            <p>
+                This refreshing soap illustration features a rich lather of foam that will leave your skin feeling clean and rejuvenated. Perfect for your daily bath routine!
+            </p>
+            <p>Price:</p>
+            <button class="add-to-cart">Add to Cart</button>
         </div>
     </div>
-    <%
-    }
-    %>
 
+    <div class="product">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPyNfiBKbbmJij3kyfewOK2jD0oIf_mfu8mg_bcMy6WA&s" alt="Product 2">
+        <div class="product-description">
+            <h3>T-Shirt</h3>
+            <p>
+                Our best-selling T-Shirt is made from premium cotton and designed for comfort and style. Available in various sizes and colors. Get yours today!
+            </p>
+             <p>Price:</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
+
+    <div class="product">
+        <img src="https://static.vecteezy.com/system/resources/previews/011/157/544/original/mobile-phone-cartoon-icon-illustration-technology-object-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg" alt="Product 3">
+        <div class="product-description">
+            <h3>Mobile Phone Icon</h3>
+            <p>
+                Discover our premium flat mobile phone icon, perfect for web and app design projects. This sleek design will elevate your digital creations!
+            </p>
+             <p>Price:</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+    </div>
 </body>
 </html>
+
+
