@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login Page</title>
+<style>
+body{
+background-image:url('sc2.jpg');
+background-repeat:no-repeat;
+background-size:cover;
+
+}
+form{
+background-color: rgba(255, 255, 255, 0.8);
+border:5px solid black;
+padding:45px 0px 40px 0px;
+margin:420px;
+margin-top:230px;
+text-align:center;
+
+}
+label{
+font-size:20px;
+color:blue;
+}
+input{
+font-size:15px;
+}
+#s1{
+font-size:20px;
+color:green;
+}
+#s1:hover {
+            background-color: powderblue;
+             cursor: pointer;
+        }
+input:hover {
+            background-color: silver;
+            
+        }
+</style>
+</head>
+<body>
+ <form id="loginForm" action="LoginServlet1" method="post">
+  
+  <label>Enter Username:</label>
+  <input type="text" id="username" name="username" placeholder="Username"><br><br>
+  <label>Enter Password:</label>
+  <input type="text" id="password" name="password" placeholder="Password"><br><br><br>
+  <input id="s1" type="submit" value="Login">
+  <br><br>
+  <a href="userregistration1.html">Register</a>
+  </form>
+  
+
+</body>
+</html>
