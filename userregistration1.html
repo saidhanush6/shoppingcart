@@ -1,72 +1,81 @@
+<!DOCTYPE html>
 <html>
-<title> Registration Form</title>
-<h1> User Registration</h1>
-<script language="javascript">
-   function validate(){
-
-	var nm,mb,mbi,em,pw,cp;
-
-  try{
-	nm=document.regform.username.value;
-	mb=document.regform.mobile.value;
-	mbi=parseInt(mb);
-	em=document.regform.email.value;
-	pw=document.regform.pwd.value;
-	cp=document.regform.cpwd.value;
-	if (nm=="" || mb=="" || em=="" || pw=="" || cp==""){
-		alert("Fields cannot be blank");
-	}else{
-	    if (mb.length == 10 ){
-			if (pw!=cp){
-		    	alert("Sorry both pwd and confirm must match");
-			}else{
-		    	//alert("Validation is successful");
-		    	document.regform.submit();
-			}
-	    }else{
-			alert("Invalid Mobile No");
-	    }
-	}
-	}catch(ex){
-		alert("Invalid Mobile No");
-		alert(ex.message);
-	}
- }
-</script>
+<head>
+    <title>Registration Page</title>
+    <style>
+        body {
+            background-image: url('sc2.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        form {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 5px solid black;
+            padding: 45px;
+            margin: 100px auto; 
+            width: 300px; 
+            text-align: left; 
+        }
+        
+        label {
+            font-size: 20px;
+            color: blue;
+            display: block;
+            margin-bottom: 10px; 
+        }
+        
+        input {
+            font-size: 15px;
+            width: calc(100% - 20px); 
+            padding: 5px; 
+            margin-bottom: 20px; 
+        }
+        
+        #s1 {
+            font-size: 20px;
+            color: green;
+            cursor: pointer;
+            padding: 10px 20px; 
+            background-color: lightgreen; 
+            border: none; 
+        }
+        
+        #s1:hover {
+            background-color: limegreen; 
+            cursor: pointer;
+        }
+    </style>
+</head>
 <body>
-   <form name="regform" action="RegisterServlet1" method="post" >
-     <table>
-	   <tr>
-		<td> Users Name</td>
-		<td> <input name=username /></td>
-	   </tr>
-	   <tr>
-		<td> Full Name</td>
-		<td> <input name=fullname /></td>
-	   </tr>
-	   <tr>
-		<td> email</td>
-		<td> <input name=email /></td>
-	   </tr>
-	   <tr>
-		<td> Mobile</td>
-		<td> <input name=mobile /></td>
-	   </tr>
-	   <tr>
-		<td> Password</td>
-		<td> <input type=password name=pwd  /></td>
-	   </tr>
-	   <tr>
-		<td> Name</td>
-		<td> <input type=password name=cpwd /></td>
-	   </tr>
-	   <tr>
-		<td> <input type=button name=reg value="Register" onClick="validate()" /></td>
-		<td> <input type=reset name=clear value="Clear" /></td>
-	   </tr>
-	</table>
-  </form>
-<a href="login1.html"> Login</a>
+    <form id="registerForm" action="RegisterServlet1" method="post">
+        <label for="username">Enter Username:</label>
+        <input type="text" id="username" name="username" placeholder="Username"><br>
+        
+        <label for="password">Enter Password:</label>
+        <input type="text" id="password" name="pwd" placeholder="Password"><br>
+        
+        <label for="customerid">Enter CustomerId:</label>
+        <input type="text" id="customerid" name="customerid" placeholder="CustomerId"><br>
+        
+        <label for="name">Enter Name:</label>
+        <input type="text" id="name" name="name" placeholder="Name"><br>
+        
+        <label for="mobile">Enter Mobile:</label>
+        <input type="text" id="mobile" name="mobile" placeholder="Mobile"><br>
+        
+        <label for="location">Enter Location:</label>
+        <input type="text" id="location" name="location" placeholder="Location"><br>
+        
+        <label for="address">Enter Address:</label>
+        <input type="text" id="address" name="address" placeholder="Address"><br>
+        
+        <label for="created_date">Enter Created Date:</label>
+        <input type="text" id="created_date" name="created_date" placeholder="Created Date"><br>
+        
+        <input id="s1" type="submit" value="Register"><br><br>
+        
+        <a href="login1.html">Login</a>
+    </form>
+</body>
 </html>
-
-
