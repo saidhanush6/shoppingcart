@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import = "java.io.*,java.util.*,practice.*"%>
+    <%@ page import = "java.sql.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -131,12 +132,41 @@ $(document).ready(function() {
     </h1> 
   </div> 
     <form>
+       
         <label id="l1">Category:</label>
-        <select name="category" id="category">
-            <option value="1">Category 1</option>
-            <option value="2">Category 2</option>
-            <option value="3">Category 3</option>
-        </select>
+     <select name="category" id="category">
+    <%  
+    Connection conn = null;
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    
+    try {
+        Class.forName("org.postgresql.Driver");
+        conn = DriverManager.getConnection(
+                "jdbc:postgresql://localhost/dhanush?user=postgres&password=dhanush2003");
+
+        String qry = "SELECT DISTINCT category FROM dhanush_products"; 
+        ps = conn.prepareStatement(qry);
+        rs = ps.executeQuery();  
+
+        while (rs.next()) {
+            String category = rs.getString("category");
+    %>
+            <option value="<%= category %>"><%= category %></option>
+    <%      
+        }
+    } catch (Exception e) {
+        e.printStackTrace(); 
+    } finally {
+        
+        try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (ps != null) ps.close(); } catch (SQLException e) { e.printStackTrace(); }
+        try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+    }
+    %>
+</select>
+
+        
 
         <label id="l2">Sort Price Wise:</label>
         <select name="sortPriceWise" id="sortPriceWise">
@@ -152,7 +182,26 @@ $(document).ready(function() {
             <p>
                 This refreshing soap illustration features a rich lather of foam that will leave your skin feeling clean and rejuvenated. Perfect for your daily bath routine!
             </p>
-            <p>Price:</p>
+            <p>Price: 
+<%
+
+  
+  String qry1 = "SELECT price FROM dhanush_products where name='Soap with Foam'";
+  PreparedStatement ps1 = conn.prepareStatement(qry1);
+  ResultSet rs1 = ps.executeQuery();
+
+  
+  if (rs1.next()) {
+    String price = rs1.getString("price");
+
+  } 
+  rs1.close();
+  ps1.close();
+ %>
+
+
+</p>
+
             <button class="add-to-cart">Add to Cart</button>
         </div>
     </div>
@@ -172,9 +221,9 @@ $(document).ready(function() {
     <div class="product">
         <img src="https://static.vecteezy.com/system/resources/previews/011/157/544/original/mobile-phone-cartoon-icon-illustration-technology-object-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg" alt="Product 3">
         <div class="product-description">
-            <h3>Mobile Phone Icon</h3>
+            <h3>Mobile Phone</h3>
             <p>
-                Discover our premium flat mobile phone icon, perfect for web and app design projects. This sleek design will elevate your digital creations!
+                Discover our premium flat mobile phone, perfect for web and app design projects. This sleek design will elevate your digital creations!
             </p>
              <p>Price:</p>
             <button class="add-to-cart">Add to Cart</button>
@@ -182,5 +231,4 @@ $(document).ready(function() {
     </div>
 </body>
 </html>
-
 
