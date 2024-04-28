@@ -8,11 +8,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+
 
 @WebServlet("/LoginServlet1")
 public class LoginServlet1 extends HttpServlet {
@@ -21,7 +21,6 @@ public class LoginServlet1 extends HttpServlet {
 			throws ServletException, IOException {
 		String username = request.getParameter("username");
 		String gpwd = request.getParameter("pwd");
-		System.out.println("succ");
 		PrintWriter out = response.getWriter();
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -30,7 +29,7 @@ public class LoginServlet1 extends HttpServlet {
 		try {
 			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection(
-					"jdbc:postgresql://192.168.110.48:5432/plf_training?user=plf_training_admin&password=pff123");
+					"jdbc:postgresql://localhost/dhanush?user=postgres&password=dhanush2003");
 
 			String qry = "SELECT password FROM dhanush_customers WHERE username=?";
 			ps = conn.prepareStatement(qry);
@@ -41,13 +40,16 @@ public class LoginServlet1 extends HttpServlet {
 
 			if (rs.next()) {
 				String apwd = rs.getString("password");
-				System.out.println(apwd);
-				if (gpwd.equals(apwd))
-					out.println("<h4>Congratulations " + username + "! Your Login is successful</h4>");
-				else
+				if (gpwd.equals(apwd)) {
+					response.sendRedirect("store.jsp");
+                    return;
+				}    
+				else {
 					out.println("<h4>Sorry " + username + "! Your Password is wrong</h4>");
-			} else
+				}
+			} else {
 				out.println("<h4>Sorry " + username + "! Your Username is wrong</h4>");
+			}
 
 		} catch (ClassNotFoundException | SQLException e) {
 			// Log the exception
