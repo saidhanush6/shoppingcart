@@ -6,12 +6,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.sql.Date;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+
 
 @WebServlet("/RegisterServlet1")
 public class RegisterServlet1 extends HttpServlet {
@@ -19,8 +21,9 @@ public class RegisterServlet1 extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		String username, fullname, pwd, email;
-		long mobile;
+		String username,name, pwd, email,mobile,location,address;
+		 int customerid;
+		 LocalDate created_date;
 		Connection conn = null;
 		PreparedStatement ps = null;
 		String qry, cs;
@@ -31,30 +34,38 @@ public class RegisterServlet1 extends HttpServlet {
 			// read the inputs
 			username = request.getParameter("username");
 			pwd = request.getParameter("pwd");
-			fullname = request.getParameter("fullname");
-			email = request.getParameter("email");
-			mobile = Long.parseLong(request.getParameter("mobile"));
+			name = request.getParameter("name");
+			mobile = request.getParameter("mobile");
+			location = request.getParameter("location");
+			address = request.getParameter("address");
+		    created_date = LocalDate.parse(request.getParameter("created_date"));
+			customerid = Integer.parseInt(request.getParameter("customerid"));
+			
 
-			// get the Print Writer
+			
 			pw = response.getWriter();
 
-			// register the driver
+			
 			Class.forName("org.postgresql.Driver");
 
-			// connect to the database
-			cs = "jdbc:postgresql://192.168.110.48:5432/plf_training?user=plf_training_admin&password=pff123";
+			
+			cs = "jdbc:postgresql://localhost/dhanush?user=postgres&password=dhanush2003";
 			conn = DriverManager.getConnection(cs);
 
-			// create prepared statement
-			qry = "insert into dhanush_customers(username,fullname,pwd,email,mobile) values(?,?,?,?,?)";
+			
+			qry = "insert into dhanush_customers(username,password,customerid,name,mobile,location,address,created_date) values(?,?,?,?,?,?,?,?)";
 			ps = conn.prepareStatement(qry);
 
-			// pass the arguments
+			
 			ps.setString(1, username);
 			ps.setString(2, pwd);
-			ps.setString(3, pwd);
-			ps.setString(4, email);
-			ps.setLong(5, mobile);
+			ps.setInt(3, customerid);
+			ps.setString(4, name);
+			ps.setString(5, mobile);
+			ps.setString(5, location);
+			ps.setString(5, address);
+			ps.setDate(5, java.sql.Date.valueOf(created_date));
+
 
 			nr = ps.executeUpdate();
 			if (nr == 1)
@@ -62,7 +73,7 @@ public class RegisterServlet1 extends HttpServlet {
 			else
 				System.out.println("Failed to create new record");
 
-			// write some out to client
+			
 			pw.write("<HTML>");
 			pw.write("<h4>Congratulations " + username + "! Your account has been registerd sucessfully</h4>");
 
