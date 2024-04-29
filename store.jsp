@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import = "java.io.*,java.util.*,practice.*"%>
-    <%@ page import = "java.sql.*"%>
+<%@ page import = "java.io.*,java.util.*,java.sql.*"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,12 +23,12 @@ h1 {
 }
 
 #hd{
- background-color: lightyellow;
- padding:1px 0px 1px 0px;
+    background-color: lightyellow;
+    padding:1px 0px 1px 0px;
 }
 
 #h1{
-margin-left:450px; 
+    margin-left:450px; 
 }
 
 #heading-icon {
@@ -98,24 +98,25 @@ label, select {
 $(document).ready(function() {
     $('.add-to-cart').click(function(e) {
         e.preventDefault();
-        var productIndex = $(this).val();
+        var productIndex = $(this).attr("data-product-index");
+        console.log("Product Index: " + productIndex);
         $.ajax({
             type: 'POST',
             url: 'cart.jsp',
             data: { productIndex: productIndex },
             success: function(response) {
-                console.log(response); // Log response to console for debugging
-                // Update cart content here if needed
+                console.log(response); 
             },
             error: function(xhr, status, error) {
-                console.error(error); // Log error to console for debugging
+                console.error(error); 
             }
         });
     });
 
-    // Click event for the cart icon in the header
-    $('#heading-icon').click(function() {
-        // Redirect to cart.jsp to display cart contents
+    
+    $('#heading-icon').click(function(e) {
+        
+        e.preventDefault();
         window.location.href = 'cart.jsp';
     });
 });
@@ -126,7 +127,7 @@ $(document).ready(function() {
 <body>
 <div id="hd">
     <h1><label id="h1">Online Store <label></label><img id="heading-icon" src="https://cdn-icons-png.flaticon.com/512/2037/2037516.png" alt="Icon">
-    <a id="link" href="login1.html">
+    <a id="link" href="sclogin.html">
     SignIn/Register
     </a>    
     </h1> 
@@ -143,7 +144,7 @@ $(document).ready(function() {
     try {
         Class.forName("org.postgresql.Driver");
         conn = DriverManager.getConnection(
-                "jdbc:postgresql://localhost/dhanush?user=postgres&password=dhanush2003");
+                "jdbc:postgresql://192.168.110.48:5432/plf_training?user=plf_training_admin&password=pff123");
 
         String qry = "SELECT DISTINCT category FROM dhanush_products"; 
         ps = conn.prepareStatement(qry);
@@ -182,27 +183,9 @@ $(document).ready(function() {
             <p>
                 This refreshing soap illustration features a rich lather of foam that will leave your skin feeling clean and rejuvenated. Perfect for your daily bath routine!
             </p>
-            <p>Price: 
-<%
+            <p>Price:70 </p>
 
-  
-  String qry1 = "SELECT price FROM dhanush_products where name='Soap with Foam'";
-  PreparedStatement ps1 = conn.prepareStatement(qry1);
-  ResultSet rs1 = ps.executeQuery();
-
-  
-  if (rs1.next()) {
-    String price = rs1.getString("price");
-
-  } 
-  rs1.close();
-  ps1.close();
- %>
-
-
-</p>
-
-            <button class="add-to-cart">Add to Cart</button>
+            <button class="add-to-cart" data-product-index="0">Add to Cart</button>
         </div>
     </div>
 
@@ -213,8 +196,8 @@ $(document).ready(function() {
             <p>
                 Our best-selling T-Shirt is made from premium cotton and designed for comfort and style. Available in various sizes and colors. Get yours today!
             </p>
-             <p>Price:</p>
-            <button class="add-to-cart">Add to Cart</button>
+             <p>Price:750</p>
+            <button class="add-to-cart" data-product-index="1">Add to Cart</button>
         </div>
     </div>
 
@@ -225,10 +208,9 @@ $(document).ready(function() {
             <p>
                 Discover our premium flat mobile phone, perfect for web and app design projects. This sleek design will elevate your digital creations!
             </p>
-             <p>Price:</p>
-            <button class="add-to-cart">Add to Cart</button>
+             <p>Price:100000</p>
+            <button class="add-to-cart" data-product-index="2">Add to Cart</button>
         </div>
     </div>
 </body>
 </html>
-
