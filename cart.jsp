@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page import = "java.io.*,java.util.*,practice.*"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,26 +36,50 @@ th, td {
     height: auto;
 }
 </style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.checkout').click(function(e) {
+        e.preventDefault();
+       
+        alert("Successfully Booked Your Items!!!");
+        
+    });
+});
+</script>
+
+
+
 </head>
 <body>
 <h1>Cart</h1>
 
 <%
-// Array of products (same as in store.jsp, ideally this should come from a session attribute or database)
 String[][] products = {
     {"Soap with Foam", "https://img.freepik.com/premium-vector/soap-with-foam-vector-flat-illustration_444100-100.jpg"},
     {"T-Shirt", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPyNfiBKbbmJij3kyfewOK2jD0oIf_mfu8mg_bcMy6WA&s"},
     {"Mobile Phone Icon", "https://static.vecteezy.com/system/resources/previews/011/157/544/original/mobile-phone-cartoon-icon-illustration-technology-object-icon-concept-isolated-premium-flat-cartoon-style-vector.jpg"}
 };
 
-// Retrieve the selected product index from the request parameter
 String productIndexStr = request.getParameter("productIndex");
+System.out.println("String:"+productIndexStr);
+int productIndex=0;
 
 if (productIndexStr != null && !productIndexStr.isEmpty()) {
-    int productIndex = Integer.parseInt(productIndexStr);
-
-    // Display the selected product in the cart
+	 productIndex=Integer.parseInt(productIndexStr);
+	System.out.println("New Int:"+productIndex);
+    
+    
 %>
+
+       
+       
+<%
+} else {
+    
+%>
+
 <table>
     <tr>
         <th>Product Name</th>
@@ -66,11 +90,8 @@ if (productIndexStr != null && !productIndexStr.isEmpty()) {
         <td><img src="<%= products[productIndex][1] %>" alt="<%= products[productIndex][0] %>" class="product-image"></td>
     </tr>
 </table>
-<%
-} else {
-    // Handle case where no product is selected
-%>
-<p>No items in the cart.</p>
+<br><br><br>
+<button type="submit" class="checkout">Checkout</button>
 <%
 }
 %>
